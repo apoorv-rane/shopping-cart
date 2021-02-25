@@ -1,0 +1,37 @@
+<div id="common-home" class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <h3>Featured</h3>
+      <div class="row">
+        <div *ngFor="let product of featuredProductList" class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+          <div class="product-thumb transition">
+            <div class="image">
+              <a [routerLink]="['../product', product.ProductId]">
+                <img
+                  class="img-fluid"
+                  [src]="'assets/images/product images/' + product.ProductImage"
+                  style="height: 200px; padding-bottom: 10px; padding-top: 10px"
+                />
+              </a>
+            </div>
+            <div class="caption">
+              <h4>
+                <a [routerLink]="['product', product.ProductId]"> {{ product.ProductName }} </a>
+              </h4>
+              <p [innerHtml]="(product.ProductDescription | slice : 0 : 120) + '...'">
+              </p>
+              <p class="price">{{ product.ProductPrice | currency:'INR':'symbol':'.0' }}</p>
+            </div>
+
+            <button class="btn btn-outline-secondary col-sm-12" type="button">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="d-none d-lg-inline-block" onclick=""
+                >Add to cart</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

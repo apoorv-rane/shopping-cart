@@ -1,0 +1,349 @@
+<div id="account-register" class="container">
+  <ul class="breadcrumb">
+    <li>
+      <a [routerLink]="['../../']"><i class="fa fa-home"></i></a>
+    </li>
+    <li><a [routerLink]="['../login']">Account</a></li>
+    <li><a [routerLink]="['../register']">Register</a></li>
+  </ul>
+
+  <div class="row">
+    <div id="content" class="col-sm-9">
+      <h1>Register Account</h1>
+      <p>
+        If you already have an account with us, please login at the
+        <a [routerLink]="['../login']">login page</a>.
+      </p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+        <h3>Your Personal Details</h3>
+        <div class="form-horizontal">
+          <hr />
+          <div class="form-group required row">
+            <label class="control-label col-sm-2" for="FirstName"
+              >First Name</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control col-sm-12 text-box single-line"
+                id="FirstName"
+                name="FirstName"
+                formControlName="FirstName"
+                placeholder="Enter First Name"
+                type="text"
+                [ngClass]="{
+                  'is-invalid': FirstName.touched && FirstName.errors
+                }"
+                value=""
+              />
+              <div
+                *ngIf="FirstName.touched && FirstName.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="FirstName.errors.required">
+                  Please enter First Name
+                </div>
+                <div *ngIf="FirstName.errors.pattern">
+                  Only letters are allowed
+                </div>
+                <div *ngIf="FirstName.errors.maxlength">
+                  First Name should not exceed 50 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required row">
+            <label class="control-label col-sm-2" for="LastName"
+              >Last Name</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control col-sm-12 text-box single-line"
+                id="LastName"
+                name="LastName"
+                formControlName="LastName"
+                placeholder="Enter Last Name"
+                type="text"
+                value=""
+                [ngClass]="{
+                  'is-invalid': LastName.touched && LastName.errors
+                }"
+              />
+              <div
+                *ngIf="LastName.touched && LastName.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="LastName.errors.required">
+                  Please enter Last Name
+                </div>
+                <div *ngIf="LastName.errors.pattern">
+                  Only letters are allowed
+                </div>
+                <div *ngIf="LastName.errors.maxlength">
+                  Last Name should not exceed 50 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required row">
+            <label class="control-label col-sm-2" for="UserEmail"
+              >Email Id</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control col-sm-12 text-box single-line"
+                id="UserEmail"
+                name="UserEmail"
+                formControlName="UserEmail"
+                placeholder="Enter Email Id"
+                type="text"
+                value=""
+                [ngClass]="{
+                  'is-invalid': UserEmail.touched && UserEmail.errors
+                }"
+              />
+              <div
+                *ngIf="UserEmail.touched && UserEmail.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="UserEmail.errors.required">
+                  Please enter Email Id
+                </div>
+                <div *ngIf="UserEmail.errors.email">
+                  Please enter valid Email Id
+                </div>
+                <div *ngIf="UserEmail.errors.emailExists">
+                  Email already exists
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required row">
+            <label class="control-label col-sm-2" for="UserMobile"
+              >Mobile No.</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control col-sm-12 text-box single-line"
+                placeholder="Enter Mobile Number"
+                id="UserMobile"
+                name="UserMobile"
+                formControlName="UserMobile"
+                type="text"
+                value=""
+                [ngClass]="{
+                  'is-invalid': UserMobile.touched && UserMobile.errors
+                }"
+              />
+              <div
+                *ngIf="UserMobile.touched && UserMobile.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="UserMobile.errors.required">
+                  Please enter Mobile Number
+                </div>
+                <div *ngIf="UserMobile.errors.pattern">
+                  Only numbers are allowed
+                </div>
+                <div
+                  *ngIf="
+                    UserMobile.errors.maxlength || UserMobile.errors.minlength
+                  "
+                >
+                  Mobile no. should have 10 digits
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required row">
+            <label class="control-label col-sm-2" for="UserAddress"
+              >Address</label
+            >
+            <div class="col-sm-10">
+              <div
+                formArrayName="UserAddress"
+                *ngFor="let item of UserAddress.controls; let i = index"
+              >
+                <div class="row" [formGroupName]="i">
+                  <div class="col-sm-6">
+                    <input
+                      class="form-control address-margin"
+                      formControlName="Line1"
+                      type="text"
+                      placeholder="Address Line 1"
+                    />
+                    <input
+                      class="form-control address-margin"
+                      formControlName="Line2"
+                      type="text"
+                      placeholder="Address Line 2"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      class="form-control address-margin"
+                      formControlName="City"
+                      type="text"
+                      placeholder="City"
+                    />
+                    <input
+                      class="form-control address-margin"
+                      formControlName="PinCode"
+                      type="text"
+                      placeholder="Pin code"
+                    />
+                  </div>
+                </div>
+                <div *ngIf="i != 0; else elseBlock" class="row">
+                  <div class="col-sm-12">
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm float-right address-margin"
+                      (click)="removeAddress(i)"
+                    >
+                      <i class="fa fa-trash"></i>&nbsp;Remove
+                    </button>
+                  </div>
+                </div>
+                <ng-template #elseBlock>
+                  <hr />
+                </ng-template>
+              </div>
+              <button
+                type="button"
+                class="btn btn-success btn-sm float-right"
+                (click)="addAddress()"
+              >
+                <i class="fa fa-plus"></i>&nbsp;Add
+              </button>
+            </div>
+          </div>
+
+          <!-- <div class="form-group required row">
+            <label class="control-label col-sm-2" for="UserAddress"
+              >Address</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control col-sm-12 text-box single-line"
+                placeholder="Enter Address"
+                id="UserAddress"
+                name="UserAddress"
+                formControlName="UserAddress"
+                type="text"
+                value=""
+                [ngClass]="{
+                  'is-invalid': UserAddress.touched && UserAddress.errors
+                }"
+              />
+              <div
+                *ngIf="UserAddress.touched && UserAddress.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="UserAddress.errors.required">
+                  Please enter Address
+                </div>
+                <div *ngIf="UserAddress.errors.maxlength">
+                  Last Name should not exceed 1000 characters
+                </div>
+              </div>
+              
+            </div>
+          </div>  -->
+
+          <h3>Your Password</h3>
+          <hr />
+
+          <div class="form-group required row">
+            <label class="control-label col-sm-2" for="UserPassword"
+              >Password</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control col-sm-12 text-box single-line password"
+                placeholder="Enter Password"
+                id="UserPassword"
+                name="UserPassword"
+                formControlName="UserPassword"
+                type="password"
+                [ngClass]="{
+                  'is-invalid': UserPassword.touched && UserPassword.errors
+                }"
+              />
+              <div
+                *ngIf="UserPassword.touched && UserPassword.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="UserPassword.errors.required">
+                  Please enter Password
+                </div>
+                <div *ngIf="UserPassword.errors.pattern">
+                  Password must contain at least one lowercase letter, uppercase
+                  letter, number and special character and should be at least 8
+                  characters long.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group required row">
+            <label class="control-label col-sm-2" for="ConfirmPassword"
+              >Confirm Password</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control col-sm-12 text-box single-line password"
+                placeholder="Re-enter Password"
+                id="ConfirmPassword"
+                name="ConfirmPassword"
+                formControlName="ConfirmPassword"
+                type="password"
+                [ngClass]="{
+                  'is-invalid':
+                    ConfirmPassword.touched && ConfirmPassword.errors
+                }"
+                pattern="{{ UserPassword.value }}"
+              />
+              <div
+                *ngIf="ConfirmPassword.touched && ConfirmPassword.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="ConfirmPassword.errors.required">
+                  Please re-enter Password
+                </div>
+                <div *ngIf="ConfirmPassword.errors.pattern">
+                  Passwords do not match
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="float-right">
+            <button
+              type="submit"
+              [disabled]="registerForm.invalid"
+              class="btn btn-primary"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <aside id="column-right" class="col-sm-3 d-none d-sm-block">
+      <div class="list-group">
+        <a [routerLink]="['../login']" class="list-group-item">Login</a>
+        <a [routerLink]="['../register']" class="list-group-item">Register</a>
+        <a href="/Account/Forgotten" class="list-group-item"
+          >Forgotten Password</a
+        >
+        <a href="/Order/OrderHistory" class="list-group-item">Order History</a>
+      </div>
+    </aside>
+  </div>
+</div>

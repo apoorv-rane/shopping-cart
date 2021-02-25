@@ -1,0 +1,117 @@
+<nav id="top">
+  <div class="container">
+    <div id="top-links" class="nav float-right">
+      <ul class="list-inline">
+        <li class="list-inline-item dropdown">
+          <a
+            title="My Account"
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa fa-user"></i>&nbsp;
+            <span class="d-none d-lg-inline-block">My Account</span>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li *ngIf="!loggedIn" class="dropdown-item">
+              <a [routerLink]="'account/register'">
+                Register
+              </a>
+            </li>
+            <li *ngIf="!loggedIn" class="dropdown-item"><a [routerLink]="'account/login'">Login</a></li>
+            <li *ngIf="loggedIn" class="dropdown-item"><a (click)="logout()">Logout</a></li>
+          </ul>
+        </li>
+
+        <li class="list-inline-item">
+          <a [routerLink]="'cart'" title="Shopping Cart">
+            <i class="fa fa-shopping-cart"></i>&nbsp;
+            <span class="d-none d-lg-inline-block">Shopping Cart</span>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a [routerLink]="'checkout'" title="Checkout">
+            <i class="fa fa-share"></i>&nbsp;
+            <span class="d-none d-lg-inline-block">Checkout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<header>
+  <div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9">
+          <div id="logo">
+            <h1><a [routerLink]="''">Store</a></h1>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <form [formGroup]="searchForm">
+            <div id="search" class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+              </div>
+              <input type="text" name="search" value="" placeholder="Search Products" class="form-control input-lg" formControlName="search">
+            </div>
+          </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <nav id="menu" class="navbar">
+    <div class="navbar-header d-block d-md-none">
+      <span id="category" class="d-block d-md-none">Categories</span>
+      <button
+        type="button"
+        class="btn btn-navbar navbar-toggle"
+        data-toggle="collapse"
+        data-target=".navbar-ex1-collapse"
+      >
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="navbar-collapse navbar-ex1-collapse navbar-expand-lg">
+      <ul class="nav navbar-nav mr-auto">
+        <li *ngFor="let category of categoryList" class="dropdown nav-item">
+          <a [routerLink]="['category']" (click)="categoryClicked(category.CategoryId)" (mouseover)="loadProducts(category.CategoryId)" data-toggle="dropdown">
+            <input
+              id="item_CategoryId"
+              name="item.CategoryId"
+              type="hidden"
+              [value]="category.CategoryId"
+            />
+            {{ category.CategoryName }}
+          </a>
+          <div class="dropdown-menu">
+            <div class="dropdown-inner">
+              <li *ngFor="let product of productList">
+                <a [routerLink]="['product', product.ProductId]">
+                  <input
+                    id="product_ProductId"
+                    name="product.ProductId"
+                    type="hidden"
+                    [value]="product.ProductId"
+                  />
+                  {{ product.ProductName }}
+                </a>
+            </li>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a [routerLink]="['category']" (click)="categoryClicked(category.CategoryId)" class="show-all dropdown-header">
+              Show all {{ category.CategoryName }}
+            </a>
+          </div>
+          &nbsp;
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

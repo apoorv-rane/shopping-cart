@@ -1,0 +1,86 @@
+<div id="product-category" class="container">
+  <ul class="breadcrumb">
+    <li>
+      <a [routerLink]="['../']"><i class="fa fa-home"></i></a>
+    </li>
+    <li>
+      <a
+        [routerLink]="['../category']"
+        (click)="categoryClicked(category.CategoryId)"
+        >{{ category.CategoryName }}</a
+      >
+    </li>
+  </ul>
+
+  <div class="row">
+    <aside id="column-left" class="col-sm-3 d-none d-sm-block">
+      <div class="list-group">
+        <a
+          [routerLink]="['../category']"
+          (click)="categoryClicked(item.CategoryId)"
+          *ngFor="let item of categoryList"
+        >
+          {{ item.CategoryName }}
+        </a>
+      </div>
+    </aside>
+    <div class="content col-sm-9">
+      <h2>{{ category.CategoryName }}</h2>
+      <div class="row">
+        <div class="col-sm-2">
+          <img
+            class="img-fluid"
+            [src]="'assets/images/category images/' + category.CategoryImage"
+            height="100"
+            width="100"
+          />
+        </div>
+        <div class="col-sm-10">
+          <p [innerHtml]="category.CategoryDescription"></p>
+        </div>
+      </div>
+      <br />
+
+      <hr />
+
+      <div class="row">
+        <div
+          *ngFor="let item of productList"
+          class="product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12"
+        >
+          <div class="product-thumb transition">
+            <div class="image">
+              <a [routerLink]="['../product', item.ProductId]">
+                <img
+                  class="img-fluid"
+                  [src]="'assets/images/product images/' + item.ProductImage"
+                  style="height: 200px; padding-bottom: 10px; padding-top: 10px"
+                />
+              </a>
+            </div>
+            <div class="caption">
+              <h4>
+                <a [routerLink]="['../product', item.ProductId]">
+                  {{ item.ProductName }}
+                </a>
+              </h4>
+              <p
+                [innerHtml]="(item.ProductDescription | slice: 0:130) + '...'"
+              ></p>
+              <p class="price">
+                {{ item.ProductPrice | currency: "INR":"symbol":".0" }}
+              </p>
+            </div>
+
+            <button class="btn btn-outline-secondary col-sm-12" type="submit">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="d-none d-lg-inline-block" onclick=""
+                >Add to cart</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
