@@ -1,4 +1,69 @@
 <div class="container">
-    <p>checkout works!</p>
-</div>
+  <ul class="breadcrumb">
+    <li>
+      <a routerLink=""><i class="fa fa-home"></i></a>
+    </li>
+    <li>
+      <a routerLink="../cart"
+        ><i class="fa fa-shopping-cart"></i>&nbsp;Shopping Cart</a
+      >
+    </li>
+    <li>
+      <a routerLink="../checkout"><i class="fa fa-share"></i>&nbsp;Checkout</a>
+    </li>
+  </ul>
 
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Shopping Cart</h1>
+      <div *ngIf="count != 0" class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Image</td>
+              <td class="text-left">Name</td>
+              <td class="text-left">Quantity</td>
+              <td class="text-right">Unit Price</td>
+              <td class="text-right">Total Price</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td class="text-center">
+                <a [routerLink]="['product', item.Product.ProductId]">
+                  <img
+                    [src]="
+                      'assets/images/product images/' +
+                      item.Product.ProductImage
+                    "
+                    style="height: 50px"
+                  />
+                </a>
+              </td>
+              <td class="text-left">
+                <a [routerLink]="['product', item.Product.ProductId]">
+                  {{ item.Product.ProductName }}
+                </a>
+              </td>
+              <td class="text-left">x{{ item.Quantity }}</td>
+              <td class="text-right">&#8377;{{ item.Product.ProductPrice }}</td>
+              <td class="text-right">&#8377;{{ item.Price }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="count != 0" class="col-md-4 offset-sm-8">
+        <table class="table table-bordered">
+          <tr>
+            <td class="text-right">Total Price</td>
+            <td class="text-right">&#8377;{{ total }}</td>
+          </tr>
+        </table>
+      </div>
+      <p *ngIf="count == 0">
+        Your cart is empty, do some <a routerLink="">shopping</a>.
+      </p>
+    </div>
+    
+  </div>
+</div>

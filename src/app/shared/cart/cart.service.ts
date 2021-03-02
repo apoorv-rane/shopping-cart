@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { Product } from '../product/product';
 import { Item } from './item';
@@ -8,7 +9,7 @@ import { Item } from './item';
 })
 export class CartService {
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
   
   cartItems = new BehaviorSubject<Item[]>(localStorage.getItem('cartItems') == null ? [] : JSON.parse(localStorage.getItem('cartItems')))
 
@@ -19,7 +20,7 @@ export class CartService {
     }
     let items: Item[] = (localStorage.getItem('cartItems') == null ? [] : JSON.parse(localStorage.getItem('cartItems')))
     let itemAdded = false
-    items.forEach( (obj) => {
+    items.forEach((obj) => {
       if(obj.Product.ProductId == product.ProductId){
         obj.Quantity += quantity
         obj.Price += price
@@ -36,6 +37,8 @@ export class CartService {
     }
     localStorage.setItem('cartItems', JSON.stringify(items))
     this.cartItems.next(items)
+    this.toastr.clear()
+    this.toastr.success('', 'Item added to cart')
   }
 
   removeItem(item: Item){
@@ -46,6 +49,8 @@ export class CartService {
     })
     localStorage.setItem('cartItems', JSON.stringify(items))
     this.cartItems.next(items)
+    this.toastr.clear()
+    this.toastr.info('', 'Item removed from cart')
   }
 
   updateItem(item: Item, quantity: number){
@@ -63,6 +68,8 @@ export class CartService {
       })
       localStorage.setItem('cartItems', JSON.stringify(items))
       this.cartItems.next(items)
+      this.toastr.clear()
+      this.toastr.success('', 'Item quantity updated')
     }
   }
 }

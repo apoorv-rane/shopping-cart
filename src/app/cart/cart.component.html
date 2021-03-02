@@ -1,10 +1,10 @@
 <div id="shopping-cart" class="container">
   <ul class="breadcrumb">
     <li>
-      <a href="/Client/Index"><i class="fa fa-home"></i></a>
+      <a routerLink=""><i class="fa fa-home"></i></a>
     </li>
     <li>
-      <a href="/Cart/ShoppingCart"
+      <a routerLink="../cart"
         ><i class="fa fa-shopping-cart"></i>&nbsp;Shopping Cart</a
       >
     </li>
@@ -27,7 +27,7 @@
           <tbody>
             <tr *ngFor="let item of cartItems">
               <td class="text-center">
-                <a href="">
+                <a [routerLink]="['../product', item.Product.ProductId]">
                   <img
                     [src]="
                       'assets/images/product images/' +
@@ -38,30 +38,28 @@
                 </a>
               </td>
               <td class="text-left">
-                <a href="">
+                <a [routerLink]="['../product', item.Product.ProductId]">
                   {{ item.Product.ProductName }}
                 </a>
               </td>
               <td class="text-left">
                 <div style="padding-left: 10px">
-                  <form [formGroup]="updateForm" (ngSubmit)="updateItem(item)">
-                    <div class="form-group row">
-                      <input
-                        class="form-control col-sm-8"
-                        type="number"
-                        formControlName="Quantity"
-                        [value]="item.Quantity"
-                      />
-                      <div class="button-group">
-                        <button type="submit" class="btn btn-sm btn-primary">
-                          <i class="fa fa-refresh"></i>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-danger" (click)="removeItem(item)">
-                          <i class="fa fa-times"></i>
-                        </button>
+                  <div class="form-group row">
+                    <input
+                      class="form-control col-sm-6"
+                      type="number"
+                      value={{item.Quantity}}
+                      #newQuantity
+                    />
+                    <div class="button-group">
+                      <button type="button" class="btn btn-sm btn-primary" (click)="updateItem(item, newQuantity.value)">
+                        <i class="fa fa-refresh"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-danger" (click)="removeItem(item)">
+                        <i class="fa fa-times"></i>
+                      </button>
                       </div>
-                    </div>
-                  </form>
+                  </div>
                 </div>
               </td>
               <td class="text-right">&#8377;{{ item.Product.ProductPrice }}</td>

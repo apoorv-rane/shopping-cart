@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CartService } from '../shared/cart/cart.service';
 import { Item } from '../shared/cart/item';
-import { Product } from '../shared/product/product';
 
 @Component({
   selector: 'app-cart',
@@ -11,12 +10,11 @@ import { Product } from '../shared/product/product';
 })
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private formBuilder: FormBuilder) { }
+  constructor(private cartService: CartService) { }
 
   cartItems: Item[] = []
   total: number = 0
   count: number = 0
-  
   ngOnInit(): void {
     this.cartService.cartItems.subscribe(res => {
       this.cartItems = res
@@ -27,14 +25,8 @@ export class CartComponent implements OnInit {
     })
   }
 
-  updateForm = this.formBuilder.group({
-    Quantity: ['', [Validators.required, Validators.min(1)]]
-  })
-
-  get Quantity(){return this.updateForm.get('Quantity')}
-
-  updateItem(item: Item){
-    this.cartService.updateItem(item, this.updateForm.controls['Quantity'].value)
+  updateItem(item: Item, quantity){
+    this.cartService.updateItem(item, Number(quantity))
   }
 
   removeItem(item: Item){

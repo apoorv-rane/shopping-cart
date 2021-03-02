@@ -7,9 +7,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { AccountComponent } from './account.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AsideComponent } from './aside/aside.component';
 
 @NgModule({
-  declarations: [AccountComponent, LoginComponent, RegisterComponent],
+  declarations: [AccountComponent, LoginComponent, RegisterComponent, ForgotPasswordComponent, ResetPasswordComponent, AsideComponent],
   imports: [
     CommonModule,
     AccountRoutingModule,

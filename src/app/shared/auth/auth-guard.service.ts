@@ -44,7 +44,7 @@ export class AuthGuardService {
     state: RouterStateSnapshot
   ): boolean {
     let loggedInUser = this.authService.getLoggedInUser()
-    if (loggedInUser.roleId === 1) {
+    if (loggedInUser.roleId === 2) {
       return true
     } else {
       this.toastr.clear()

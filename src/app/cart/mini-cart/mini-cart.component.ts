@@ -21,7 +21,10 @@ export class MiniCartComponent implements OnInit {
       this.total = 0
       this.count = 0
       this.cartItems.forEach(a => this.total += a.Price)
-      this.cartItems.forEach(a => this.count += a.Quantity)
+      this.cartItems.forEach(a => {
+        console.log(this.count)
+        this.count += a.Quantity
+      })
     })
   }
 

@@ -12,6 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   loggedInUser: User = null
+  forgotEmail: string = ''
   userUrl = "https://localhost:44381/User/"
   httpOptions = {
     headers: new HttpHeaders({
@@ -41,6 +42,22 @@ export class UserService {
 
   checkLogin(): Observable<User> {
     return this.http.get<User>(this.userUrl + "CheckLogin")
+      .pipe(
+        retry(1),
+        // catchError(this.handleError)
+      )
+  }
+
+  ForgotPassword(user): Observable<User> {
+    return this.http.post<User>(this.userUrl + "ForgotPassword", JSON.stringify(user), this.httpOptions)
+      .pipe(
+        retry(1),
+        // catchError(this.handleError)
+      )
+  }
+
+  ResetPassword(user): Observable<User> {
+    return this.http.post<User>(this.userUrl + "ResetPassword", JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(1),
         // catchError(this.handleError)
