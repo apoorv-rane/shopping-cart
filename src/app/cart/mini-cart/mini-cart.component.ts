@@ -1,56 +1,32 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/shared/cart/cart.service';
+import { Item } from 'src/app/shared/cart/item';
 
 @Component({
   selector: 'app-mini-cart',
   templateUrl: './mini-cart.component.html',
   styleUrls: ['./mini-cart.component.css']
 })
-export class MiniCartComponent implements OnInit, OnChanges, DoCheck {
+export class MiniCartComponent implements OnInit {
 
-  constructor() { }
-  private myNumber: number
+  constructor(private cartService: CartService) { }
 
-  @Input() newUser
-
-  @Input()
-  set myNewNumber(number: number){
-    this.myNumber = number
-  }
-
-  get myNewNumber(){
-    return this.myNumber
-  }
-
-  ngOnChanges(changes: SimpleChanges){
-    const myNumberChange: SimpleChange = changes.myNewNumber
-    console.log("ngOnChanges")
-  }
+  cartItems: Item[] = []
+  total: number = 0
+  count: number = 0
 
   ngOnInit(): void {
-    console.log("ngOnInit")
-  }
-  
-  ngDoCheck(){
-    console.log("ngDoCheck")
-  }
-
-  ngAfterContentInit(){
-    console.log("ngAfterContentInit")
+    this.cartService.cartItems.subscribe(res => {
+      this.cartItems = res
+      this.total = 0
+      this.count = 0
+      this.cartItems.forEach(a => this.total += a.Price)
+      this.cartItems.forEach(a => this.count += a.Quantity)
+    })
   }
 
-  ngAfterContentChecked(){
-    console.log("ngAfterContentChecked")
+  removeItem(item: Item){
+    this.cartService.removeItem(item)
   }
 
-  ngAfterViewInit(){
-    console.log("ngAfterViewInit")
-  }
-
-  ngAfterViewChecked(){
-    console.log("ngAfterViewChecked")
-  }
-
-  ngOnDestroy(){
-    console.log("ngOnDestroy")
-  }
 }

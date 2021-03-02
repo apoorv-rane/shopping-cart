@@ -1,1 +1,60 @@
-<h1>{{ myNewNumber }}</h1>
+<div id="cart" class="btn-group btn-block">
+  <button
+    type="button"
+    data-toggle="dropdown"
+    data-loading-text="Loading..."
+    class="btn btn-inverse btn-dark btn-block btn-lg"
+  >
+    <i class="fa fa-shopping-cart"></i>
+    <span id="cart-total">&nbsp;{{ count }} item(s) - &#8377;{{ total }}</span>
+  </button>
+  <ul class="dropdown-menu">
+    <div *ngIf="count != 0; then ifBlock; else elseBlock"></div>
+    <ng-template #ifBlock>
+      <li>
+        <table class="table table-striped">
+          <tr *ngFor="let item of cartItems">
+            <td class="text-center">
+              <a href="">
+                <img [src]="'assets/images/product images/' + item.Product.ProductImage" style="height: 50px" />
+              </a>
+            </td>
+            <td class="text-left">
+              <a href="">
+                {{ item.Product.ProductName }}
+              </a>
+            </td>
+            <td class="text-right">x&nbsp;{{ item.Quantity }}</td>
+            <td class="text-right">&#8377;{{ item.Product.ProductPrice }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-danger" (click)="removeItem(item)">
+                <i class="fa fa-times"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </li>
+      <li>
+        <div>
+          <table class="table table-bordered">
+            <tr>
+              <td class="text-right">Total Price</td>
+              <td class="text-right">&#8377;{{ total }}</td>
+            </tr>
+          </table>
+          <p class="text-right">
+            <a routerLink="cart">
+              <i class="fa fa-shopping-cart">&nbsp;View Cart</i></a
+            >&nbsp;
+            <a routerLink="checkout">
+              <i class="fa fa-share">&nbsp;Checkout</i>
+            </a>
+          </p>
+        </div>
+      </li>
+    </ng-template>
+    <ng-template #elseBlock>
+      <li><p class="text-center">Your shopping cart is empty</p></li>
+    </ng-template>
+  </ul>
+</div>

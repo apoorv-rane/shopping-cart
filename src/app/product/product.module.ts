@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductComponent } from './product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -12,6 +13,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
   imports: [
     CommonModule,
     ProductRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class ProductModule {

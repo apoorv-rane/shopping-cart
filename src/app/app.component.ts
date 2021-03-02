@@ -18,7 +18,6 @@ export class AppComponent {
   checkLogin(){
     return this.userApi.checkLogin().subscribe((data: User) => {
       this.userApi.loggedInUser = data;
-      console.log(this.userApi.loggedInUser);
     })
   }
 }

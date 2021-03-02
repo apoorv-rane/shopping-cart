@@ -1,78 +1,91 @@
 <div id="product-product" class="container">
-    <ul class="breadcrumb">
-      <li>
-        <a [routerLink]="['../../']"><i class="fa fa-home"></i></a>
-      </li>
-      <li>
-        <a
-          [routerLink]="['../../category']"
-          (click)="categoryClicked(product.CategoryId)"
-          >{{ product.CategoryName }}</a
-        >
-      </li>
-      <li>
-        <a
-        [routerLink]="['../../product', product.ProductId]"
-          >{{ product.ProductName }}</a
-        >
-      </li>
-    </ul>
-  
-    <div class="row">
-      <div id="content" class="col-sm-12">
-        <div class="row">
-          <div class="col-sm-8">
-            <ul class="thumbnails">
-              <li>
-                <a
-                  class="img-thumbnail"
-                  href="#"
-                  title="@Model.ProductImage"
-                  style="display: flex; align-items: center"
-                >
-                  <img
-                    [src]="'assets/images/product images/' + product.ProductImage"
-                    style="
-                      height: 250px;
-                      margin-left: auto;
-                      margin-right: auto;
-                      padding-top: 10px;
-                      padding-bottom: 10px;
-                    "
-                  />
-                </a>
-              </li>
-            </ul>
-            <br />
-            <h4>Description</h4>
-            <hr />
-            <div class="tab-content">
-              <span [innerHtml]="product.ProductDescription"></span>
-            </div>
+  <ul class="breadcrumb">
+    <li>
+      <a [routerLink]="['../../']"><i class="fa fa-home"></i></a>
+    </li>
+    <li>
+      <a
+        [routerLink]="['../../category']"
+        (click)="categoryClicked(product.CategoryId)"
+        >{{ product.CategoryName }}</a
+      >
+    </li>
+    <li>
+      <a [routerLink]="['../../product', product.ProductId]">{{
+        product.ProductName
+      }}</a>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-8">
+          <ul class="thumbnails">
+            <li>
+              <a
+                class="img-thumbnail"
+                href="#"
+                title="@Model.ProductImage"
+                style="display: flex; align-items: center"
+              >
+                <img
+                  [src]="'assets/images/product images/' + product.ProductImage"
+                  style="
+                    height: 250px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                  "
+                />
+              </a>
+            </li>
+          </ul>
+          <br />
+          <h4>Description</h4>
+          <hr />
+          <div class="tab-content">
+            <span [innerHtml]="product.ProductDescription"></span>
           </div>
-  
-          <div class="col-sm-4">
-            <h1>{{ product.ProductName }}</h1>
+        </div>
+
+        <div class="col-sm-4">
+          <h1>{{ product.ProductName }}</h1>
+          <br />
+          <h2>{{ product.ProductPrice | currency: "INR":"symbol":".0" }}</h2>
+          <br />
+
+          <form [formGroup]="addForm" (ngSubmit)="addItem(product)">
+            <label class="control-label" for="Quantity">Qty.</label>
+            <input
+              class="form-control col-sm-12"
+              id="Quantity"
+              formControlName="Quantity"
+              type="number"
+              placeholder="Enter Quantity here"
+              [ngClass]="{
+                'is-invalid': Quantity.touched && Quantity.errors
+              }"
+            />
+            <div
+                *ngIf="Quantity.touched && Quantity.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="Quantity.errors.required">
+                  Please enter Quantity
+                </div>
+                <div *ngIf="Quantity.errors.min">
+                  Quantity must be greater than 0
+                </div>
+              </div>
             <br />
-            <h2>{{ product.ProductPrice | currency: "INR":"symbol":".0" }}</h2>
-            <br />
-  
-            <div class="form-group">
-              <!-- @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class
-              = "control-label" })
-              @Html.EditorFor(model => model.Quantity, new {
-              htmlAttributes = new { @class = "form-control col-sm-12" } })
-              @Html.ValidationMessageFor(model => model.Quantity, "", new { @class
-              = "text-danger" }) -->
-              <br />
-              <br />
-              <button type="submit" class="btn btn-primary btn-lg btn-block">
-                Add to Cart
-              </button>
-            </div>
-          </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">
+              Add to Cart
+            </button>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

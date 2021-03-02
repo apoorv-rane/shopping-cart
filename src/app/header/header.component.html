@@ -44,12 +44,12 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-4">
           <div id="logo">
             <h1><a [routerLink]="''">Store</a></h1>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-5">
           <form [formGroup]="searchForm">
             <div id="search" class="input-group">
               <div class="input-group-prepend">
@@ -58,6 +58,9 @@
               <input type="text" name="search" value="" placeholder="Search Products" class="form-control input-lg" formControlName="search">
             </div>
           </form>
+      </div>
+      <div class="col-sm-3">
+        <app-mini-cart></app-mini-cart>
       </div>
       </div>
     </div>

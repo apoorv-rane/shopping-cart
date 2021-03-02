@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from '../shared/cart/cart.service';
+import { Item } from '../shared/cart/item';
 import { Product } from '../shared/product/product'
 import { ProductService } from '../shared/product/product.service';
 
@@ -9,17 +11,22 @@ import { ProductService } from '../shared/product/product.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private productApi: ProductService) { }
+  constructor(private productApi: ProductService, private cartService: CartService) { }
 
   featuredProductList: any = [];
   
   ngOnInit(): void {
     this.loadFeaturedProducts()
+    console.log(localStorage.getItem('cartItems'))
   }
 
   loadFeaturedProducts(){
     this.productApi.getFeaturedProducts().subscribe(( data: {}) => {
       this.featuredProductList = data
     })
+  }
+
+  addItem(product: Product){
+    this.cartService.addItem(product, 1)
   }
 }

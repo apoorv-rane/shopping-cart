@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { AuthService } from '../shared/auth/auth.service';
+import { CartService } from '../shared/cart/cart.service';
 import { CategoryService } from '../shared/category/category.service';
 import { ProductService } from '../shared/product/product.service';
 
@@ -20,7 +21,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private authService: AuthService,
-    private formBuilder: FormBuilder) {}
+    private formBuilder: FormBuilder,
+    private cartService: CartService) {}
 
   categoryList: any = []
   productList: any = []
@@ -54,6 +56,7 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     localStorage.clear();
+    this.cartService.cartItems.next([])
     this.authService.getLoggedIn.next(false)
     this.toastr.clear()
     this.toastr.success('','Logout Successful')

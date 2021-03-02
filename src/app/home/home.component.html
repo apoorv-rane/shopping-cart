@@ -23,7 +23,7 @@
               <p class="price">{{ product.ProductPrice | currency:'INR':'symbol':'.0' }}</p>
             </div>
 
-            <button class="btn btn-outline-secondary col-sm-12" type="button">
+            <button class="btn btn-outline-secondary col-sm-12" type="button" (click)="addItem(product)">
               <i class="fa fa-shopping-cart"></i>
               <span class="d-none d-lg-inline-block" onclick=""
                 >Add to cart</span

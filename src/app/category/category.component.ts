@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../shared/cart/cart.service';
 import { CategoryService } from '../shared/category/category.service';
+import { Product } from '../shared/product/product';
 import { ProductService } from '../shared/product/product.service';
 
 @Component({
@@ -12,7 +14,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
     private categoryApi: CategoryService,
-    private productApi: ProductService) {
+    private productApi: ProductService,
+    private cartService: CartService) {
       // route.queryParams.subscribe(params => {
       //   this.categoryId = params.categoryId;
       //   this.loadCategories();
@@ -63,4 +66,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
     // this.categoryApi.categoryIdObserved(categoryId)
     this.categoryApi.categoryId.next(categoryId);
   }
+
+  addItem(product: Product){
+    this.cartService.addItem(product, 1)
+  }
+  
 }

@@ -1,6 +1,99 @@
-<div class="container">
-  <button class="btn btn-primary" (click)="decrement()">Subtract</button>
-  <button class="btn btn-secondary" (click)="increment()">Add</button>
-  <button class="btn btn-success" (click)="updateValue()">Update</button>
-  <app-mini-cart [myNewNumber]="counter" [newUser]="user"></app-mini-cart>
+<div id="shopping-cart" class="container">
+  <ul class="breadcrumb">
+    <li>
+      <a href="/Client/Index"><i class="fa fa-home"></i></a>
+    </li>
+    <li>
+      <a href="/Cart/ShoppingCart"
+        ><i class="fa fa-shopping-cart"></i>&nbsp;Shopping Cart</a
+      >
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Shopping Cart</h1>
+      <div *ngIf="count != 0" class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Image</td>
+              <td class="text-left">Name</td>
+              <td class="text-left">Quantity</td>
+              <td class="text-right">Unit Price</td>
+              <td class="text-right">Total Price</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td class="text-center">
+                <a href="">
+                  <img
+                    [src]="
+                      'assets/images/product images/' +
+                      item.Product.ProductImage
+                    "
+                    style="height: 50px"
+                  />
+                </a>
+              </td>
+              <td class="text-left">
+                <a href="">
+                  {{ item.Product.ProductName }}
+                </a>
+              </td>
+              <td class="text-left">
+                <div style="padding-left: 10px">
+                  <form [formGroup]="updateForm" (ngSubmit)="updateItem(item)">
+                    <div class="form-group row">
+                      <input
+                        class="form-control col-sm-8"
+                        type="number"
+                        formControlName="Quantity"
+                        [value]="item.Quantity"
+                      />
+                      <div class="button-group">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                          <i class="fa fa-refresh"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" (click)="removeItem(item)">
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </td>
+              <td class="text-right">&#8377;{{ item.Product.ProductPrice }}</td>
+              <td class="text-right">&#8377;{{ item.Price }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="count != 0" class="col-md-4 offset-sm-8">
+        <table class="table table-bordered">
+          <tr>
+            <td class="text-right">Total Price</td>
+            <td class="text-right">&#8377;{{ total }}</td>
+          </tr>
+        </table>
+      </div>
+      <p *ngIf="count == 0">
+        Your cart is empty, do some <a routerLink="">shopping</a>.
+      </p>
+    </div>
+
+    <div class="row">
+      <div class="buttons clearfix">
+        <div class="float-left" style="padding-left: 30px">
+          <a routerLink="" class="btn btn-outline-secondary"
+            >Continue Shopping</a
+          >
+        </div>
+        <div *ngIf="count != 0" class="float-right" style="padding-left: 20px">
+          <a routerLink="../checkout" class="btn btn-primary">Checkout</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
