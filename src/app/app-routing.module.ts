@@ -37,10 +37,10 @@ const routes: Routes = [
     data: { preload: true } 
   },
   {
-    path: 'checkout',
+    path: 'order',
     canActivate: [ AuthGuardService ],
     canActivateChild: [ AuthGuardService ],
-    loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
+    loadChildren: () => import('./order/order.module').then(m => m.OrderModule),
   },
 ];
 

@@ -1,0 +1,193 @@
+<div class="container">
+  <ul class="breadcrumb">
+    <li>
+      <a routerLink=""><i class="fa fa-home"></i></a>
+    </li>
+    <li>
+      <a routerLink="../cart"
+        ><i class="fa fa-shopping-cart"></i>&nbsp;Shopping Cart</a
+      >
+    </li>
+    <li>
+      <a routerLink="../checkout"><i class="fa fa-share"></i>&nbsp;Checkout</a>
+    </li>
+  </ul>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Shopping Cart</h1>
+      <div *ngIf="count != 0" class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Image</td>
+              <td class="text-left">Name</td>
+              <td class="text-left">Quantity</td>
+              <td class="text-right">Unit Price</td>
+              <td class="text-right">Total Price</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td class="text-center">
+                <a [routerLink]="['product', item.Product.ProductId]">
+                  <img
+                    [src]="
+                      'assets/images/product images/' +
+                      item.Product.ProductImage
+                    "
+                    style="height: 50px"
+                  />
+                </a>
+              </td>
+              <td class="text-left">
+                <a [routerLink]="['product', item.Product.ProductId]">
+                  {{ item.Product.ProductName }}
+                </a>
+              </td>
+              <td class="text-left">x{{ item.Quantity }}</td>
+              <td class="text-right">&#8377;{{ item.Product.ProductPrice }}</td>
+              <td class="text-right">&#8377;{{ item.Price }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="count != 0" class="col-md-4 offset-sm-8">
+        <table class="table table-bordered">
+          <tr>
+            <td class="text-right">Total Price</td>
+            <td class="text-right">&#8377;{{ total }}</td>
+          </tr>
+        </table>
+      </div>
+      <p *ngIf="count == 0">
+        Your cart is empty, do some <a routerLink="">shopping</a>.
+      </p>
+    </div>
+  </div>
+  <h1>Shipping Details</h1>
+  <hr />
+  <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+    <div class="form-horizontal">
+      <div class="form-group required">
+        <label class="control-label" for="Address">Address</label>
+        <input
+          class="form-control col-sm-12"
+          id="Address"
+          formControlName="Address"
+        />
+      </div>
+      <br />
+      
+      <div class="row">
+        <div class="form-group required col-sm-4">
+          <label class="control-label" for="Country">Country</label>
+          <select class="form-control" formControlName="Country" id="Country">
+            <option *ngFor="let country of countries; let i = index" [value]="country.CountryId">
+              {{country.CountryName}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group required col-sm-4">
+          <label class="control-label" for="State">State</label>
+          <select class="form-control" formControlName="State" id="State">
+            <option *ngFor="let state of states; let i = index" [value]="state.StateId">
+              {{state.StateName}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group required col-sm-4">
+          <label class="control-label" for="City">City</label>
+          <select class="form-control" formControlName="City" id="City">
+            <option *ngFor="let city of cities; let i = index" [value]="city.CityId">
+              {{city.CityName}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <br />
+      <div class="form-group required">
+        <label class="control-label" for="PostalCode">PostalCode</label>
+        <input
+          class="form-control col-sm-3"
+          id="PostalCode"
+          formControlName="PostalCode"
+        />
+      </div>
+    </div>
+    <h2>Payment Details</h2>
+    <hr />
+    <div class="row" style="margin: auto">
+      <div class="form-check-inline">
+        <label
+          ><input
+            id="Cash"
+            type="radio"
+            formControlName="PaymentMode"
+            value="Cash"
+          />&nbsp;Cash Payment</label
+        >
+      </div>
+      <div class="form-check-inline">
+        <label
+          ><input id="Card" type="radio" formControlName="PaymentMode" value="Card" />&nbsp;Card
+          Payment</label
+        >
+      </div>
+    </div>
+    <ng-container *ngIf="mode">
+      <div class="form-group required">
+        <label class="control-label" for="CardNumber">Card Number</label>
+        <input
+          class="form-control col-sm-12"
+          id="CardNumber"
+          formControlName="CardNumber"
+        />
+      </div>
+      <div class="row">
+        <div class="form-group required col-sm-6">
+          <label class="control-label" for="ExpiryMonth">Expiry Month</label>
+          <input
+            class="form-control"
+            id="ExpiryMonth"
+            formControlName="ExpiryMonth"
+          />
+        </div>
+        <div class="form-group required col-sm-6">
+          <label class="control-label" for="ExpiryYear">Expiry Year</label>
+          <input
+            class="form-control"
+            id="ExpiryYear"
+            formControlName="ExpiryYear"
+          />
+        </div>
+      </div>
+      
+      <div class="form-group required">
+        <label class="control-label" for="CVV">CVV</label>
+        <input class="form-control col-sm-12" id="CVV" formControlName="CVV" />
+      </div>
+    </ng-container>
+    <hr />
+
+    <div class="form-group">
+      <label class="control-label" for="TotalPayment">Total Payment</label>
+      <input
+        class="form-control col-sm-12"
+        id="TotalPayment"
+        formControlName="TotalPayment"
+        readonly
+      />
+      <br />
+      <label class="control-label" for="Comment">Comment</label>
+      <input
+        class="form-control col-sm-12"
+        id="Comment"
+        formControlName="Comment"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary float-right">
+      Place Order
+    </button>
+  </form>
+</div>
